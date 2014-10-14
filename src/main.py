@@ -13,8 +13,10 @@ class Handler(object):
 builder = Gtk.Builder()
 builder.add_from_file("../UI/EasyEmail_Prototype_1.glade")
 builder.connect_signals(Handler())
-window = builder.get_object("window_main")
+window = builder.get_object("window_easymail")
 window.show_all()
+
+email_body = builder.get_object("txt_email_body")
 
 
 Gtk.main()
