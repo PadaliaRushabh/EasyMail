@@ -22,6 +22,9 @@ class Handler(object):
     email.send_email()
     print("Mail Send")
 
+  def gtk_main_quit(this, *args):
+    Gtk.main_quit(*args)
+
 
 builder = Gtk.Builder()
 builder.add_from_file("/home/rushabh/Rushabh/EasyMail/UI/EasyEmail_Prototype_1.glade")
@@ -34,46 +37,21 @@ email_to = builder.get_object("txt_email_to")
 email_subject = builder.get_object("txt_email_subject")
 email_body = builder.get_object("txt_email_body")
 
-'''
-#Get list and Treeview Widget
-attachment_list = builder.get_object("list_attachment")
-attachment_view = builder.get_object("attachment_view")
+#Treeview
+view = builder.get_object("attachment_view")
+store = builder.get_object("liststore")
+col = builder.get_object("treeviewcolumn")
+cell = builder.get_object("cellrenderertext")
 
-#Define and append to List filepath
-listmodel = Gtk.ListStore(str)
-
-#get hilighted file path
-#filepath = Filepath.FilePath()
-#path = filepath.getSelectedFilepath()
-
-#for p in path:
-  #attachment_list = defined_list.append(p)
-listmodel.append(["sdsd"])
-#attachment_list = defined_list.append(["sdssdsd"])
-#the treeview
-tree = Gtk.TreeView(model=listmodel)
-
-#print(defined_list[attachm.ent_list][0])
-
-renderer = Gtk.CellRendererText()
-column = Gtk.TreeViewColumn("Attachment", renderer, text=0)
-tree.append_column(column)
-
-attachment_view = Gtk.TreeView.set_model(tree)
-'''
-
-
+#init Email Object
 email = Email.EasyMail()
 
 #get hilighted file path
 filepath = Filepath.FilePath()
 path = filepath.getSelectedFilepath()
 
-
-files = ""
-for p in path:
-  files = p + files
-  email_to.set_text(files)
-
+#append the file array to liststore
+for i in range(len(path)):
+  store.append(path[i])
 
 Gtk.main()
