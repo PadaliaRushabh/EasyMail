@@ -22,7 +22,7 @@ class FilePath(object):
 
 def main():
   filepath = FilePath()
-  paths = filepath.getFilename()
+  paths = filepath.getSelectedFilepath()
   for p in paths:
     print(p)
 
