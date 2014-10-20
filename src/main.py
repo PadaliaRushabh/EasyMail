@@ -50,8 +50,9 @@ email = Email.EasyMail()
 filepath = Filepath.FilePath()
 path = filepath.getSelectedFilepath()
 
-#append the file array to liststore
-for i in range(len(path)):
-  store.append(path[i])
+if path is not None:
+  #append the file array to liststore
+  for i in range(len(path)):
+    store.append(path[i])
 
 Gtk.main()
