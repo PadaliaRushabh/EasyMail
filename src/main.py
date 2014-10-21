@@ -6,57 +6,72 @@ from easymail_lib import Filepath
 
 
 class Handler(object):
+
+  def __init__(this, application):
+    this.application = application
+
   def on_btn_cancel_clicked(this, *args):
     Gtk.main_quit(*args)
 
   def on_btn_Send_clicked(this, *args):
-    email.set_to_address(email_to.get_text())
-    email.set_from_address("padalia.rushabh@gmail.com")
+    this.application.email.set_to_address(this.application.email_to.get_text())
+    this.application.email.set_from_address("padalia.rushabh@gmail.com")
 
-    email.set_email_subject(email_subject.get_text())
-    email.set_email_server("smtp.gmail.com:587")
-    email.set_username_and_password("padalia.rushabh@gmail.com" , "Creatives@321.com")
+    this.application.email.set_email_subject(this.application.email_subject.get_text())
+    this.application.email.set_email_server("smtp.gmail.com:587")
+    this.application.email.set_username_and_password("padalia.rushabh@gmail.com" , "Creatives@321.com")
 
-    text_buffer = email_body.get_buffer()
-    email.set_email_body(text_buffer.get_text(text_buffer.get_start_iter() ,text_buffer.get_end_iter(), True))
+    text_buffer = this.application.email_body.get_buffer()
+    this.application.email.set_email_body(text_buffer.get_text(text_buffer.get_start_iter() ,text_buffer.get_end_iter(), True))
 
-    if store is not None:
-      email.set_attachment_path(store)
-    email.send_email()
+    if this.application.store is not None:
+      this.application.email.set_attachment_path(this.application.store)
+    this.application.email.send_email()
     print("Mail Send")
 
   def gtk_main_quit(this, *args):
     Gtk.main_quit(*args)
 
+class EasyMailApplication(Gtk.Application):
+  def __init__(this):
+    this.setWidgets()
+    this.initEmail()
+    this.setAttachmentPath()
 
-builder = Gtk.Builder()
-builder.add_from_file("/home/rushabh/Rushabh/EasyMail/UI/EasyEmail_Prototype_1.glade")
-builder.connect_signals(Handler())
-window = builder.get_object("window_easymail")
-window.show_all()
+  def setWidgets(this):
+    this.builder = Gtk.Builder()
+    this.builder.add_from_file("/home/rushabh/Rushabh/EasyMail/UI/EasyEmail_Prototype_1.glade")
+    this.builder.connect_signals(Handler(this))
+    this.window = this.builder.get_object("window_easymail")
+    this.window.show_all()
 
-#Email TextBox
-email_to = builder.get_object("txt_email_to")
-email_subject = builder.get_object("txt_email_subject")
-email_body = builder.get_object("txt_email_body")
+    #Email TextBox
+    this.email_to = this.builder.get_object("txt_email_to")
+    this.email_subject = this.builder.get_object("txt_email_subject")
+    this.email_body = this.builder.get_object("txt_email_body")
 
-#Treeview
-view = builder.get_object("attachment_view")
-store = builder.get_object("liststore")
-col = builder.get_object("treeviewcolumn")
-cell = builder.get_object("cellrenderertext")
+    #Treeview
+    this.view = this.builder.get_object("attachment_view")
+    this.store = this.builder.get_object("liststore")
+    this.col = this.builder.get_object("treeviewcolumn")
+    this.cell = this.builder.get_object("cellrenderertext")
 
-#init Email Object
-email = Email.EasyMail()
+  def initEmail(this):
+    #init Email Object
+    this.email = Email.EasyMail()
 
-#get hilighted file path
-filepath = Filepath.FilePath()
-path = filepath.getSelectedFilepath()
+  def setAttachmentPath(this):
+    #get hilighted file path
+    this.filepath = Filepath.FilePath()
+    this.path = this.filepath.getSelectedFilepath()
+    this.setAttachmentPathToTree()
 
-if path is not None:
-  #append the file array to liststore
-  for i in range(len(path)):
-    store.append(path[i])
+  def setAttachmentPathToTree(this):
+    if this.path is not None:
+      #append the file array to liststore
+      for i in range(len(this.path)):
+        this.store.append(this.path[i])
 
+EasyMail = EasyMailApplication()
 
 Gtk.main()
