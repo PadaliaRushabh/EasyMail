@@ -56,6 +56,13 @@ class EasyMailApplication(Gtk.Application):
     this.col = this.builder.get_object("treeviewcolumn")
     this.cell = this.builder.get_object("cellrenderertext")
 
+    #Progressbar
+    this.parogressbar = this.builder.get_object("progressbar")
+
+
+    #statusbar
+    this.statusbar = this.builder.get_object("statusbar")
+
   def initEmail(this):
     #init Email Object
     this.email = Email.EasyMail()
