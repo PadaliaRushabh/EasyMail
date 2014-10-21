@@ -135,28 +135,6 @@ class Attachment(object):
         message.attach(attachment)
       else:
         print("Unable to open file or directory")
-      #print(attachment[0])
-
-'''
-  def set_attachment_type(self,message):
-    if(self.is_directory()):
-      for filename in os.listdir(self.attachment_path):
-        filenamepath = os.path.join(self.attachment_path , filename)
-        attachment = self.guess_and_get_attachment_type(filenamepath)
-        # Set the filename parameter
-        attachment.add_header('Content-Disposition', 'attachment', filename = filenamepath)
-        message.attach(attachment)
-
-    elif(self.is_file()):
-      attachment = self.guess_and_get_attachment_type(self.attachment_path)
-      # Set the filename parameter
-      attachment.add_header('Content-Disposition', 'attachment', filename = self.attachment_path)
-      message.attach(attachment)
-    else:
-      print("Unable to open file or directory")
-'''
-
-
 
 class EasyMail(object):
 
@@ -176,11 +154,7 @@ class EasyMail(object):
   def set_username_and_password(self,username, password):
     self.username = username
     self.password = password
-  """
-  def set_username_and_password_from_file(self,username, password):
-      self.username = username
-      self.password = password
-  """
+
   def set_email_subject(self,subject):
     self.subject = subject
 

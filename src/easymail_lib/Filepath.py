@@ -6,6 +6,11 @@ class FilePath(object):
     paths = os.environ.get('NAUTILUS_SCRIPT_SELECTED_FILE_PATHS', None)
 
     if paths is not None:
+      return this.toDoubleArray(paths)
+    return paths
+
+  def toDoubleArray(this, paths):
+    if paths is not None:
       paths = paths.splitlines()
       #make files array
       files = []
@@ -17,8 +22,8 @@ class FilePath(object):
         #add it to the outer file array
         files.append(inner)
 
-      return files
-    return paths
+    return files
+
 
 def main():
   filepath = FilePath()
