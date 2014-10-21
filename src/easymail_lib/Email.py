@@ -79,11 +79,11 @@ class Attachment(object):
   def __init__(self,attachment_path):
     self.attachment_path = attachment_path
 
-  def is_directory(self):
-    return os.path.isdir(self.attachment_path)
+  def is_directory(self, filenamepath):
+    return os.path.isdir(filenamepath)
 
-  def is_file(self):
-    return os.path.isfile(self.attachment_path)
+  def is_file(self, filenamepath):
+    return os.path.isfile(filenamepath)
 
   def guess_and_get_attachment_type(self, filenamepath):
     ctype, encoding = mimetypes.guess_type(filenamepath)
@@ -117,6 +117,28 @@ class Attachment(object):
     return attachment
 
   def set_attachment_type(self,message):
+    for attachment in self.attachment_path:
+      if(self.is_directory(attachment[0])):
+        for filename in os.listdir(attachment[0]):
+          filenamepath = os.path.join(attachment[0] , filename)
+          attachment = self.guess_and_get_attachment_type(filenamepath)
+          # Set the filename parameter
+          attachment.add_header('Content-Disposition', 'attachment', filename = filenamepath)
+          print(filenamepath)
+          message.attach(attachment)
+
+      elif(self.is_file(attachment[0])):
+        attachmentfile = attachment[0]
+        attachment = self.guess_and_get_attachment_type(attachmentfile)
+        # Set the filename parameter
+        attachment.add_header('Content-Disposition', 'attachment', filename = attachmentfile)
+        message.attach(attachment)
+      else:
+        print("Unable to open file or directory")
+      #print(attachment[0])
+
+'''
+  def set_attachment_type(self,message):
     if(self.is_directory()):
       for filename in os.listdir(self.attachment_path):
         filenamepath = os.path.join(self.attachment_path , filename)
@@ -132,8 +154,8 @@ class Attachment(object):
       message.attach(attachment)
     else:
       print("Unable to open file or directory")
+'''
 
-    #return message
 
 
 class EasyMail(object):
@@ -185,8 +207,8 @@ class EasyMail(object):
 
 def main():
   mail = EasyMail()
-  #to = ["padalia.rushabh@gmail.com" , "padalia.rushabh@outlook.com", "u5635863@anu.edu.au"]
-  to = "padalia.rushabh@gmail.com,padalia.rushabh@outlook.com,u5635863@anu.edu.au"
+  to = "padalia.rushabh@gmail.com, padalia.rushabh@outlook.com, u5635863@anu.edu.au"
+  #to = "padalia.rushabh@gmail.com,padalia.rushabh@outlook.com,u5635863@anu.edu.au"
   #to = ["sshubhadeep@gmail.com" , "gurmeetroks@gmail.com"]
   mail.set_to_address(to)
   mail.set_from_address("padalia.rushabh@gmail.com")
@@ -194,7 +216,8 @@ def main():
   mail.set_username_and_password("padalia.rushabh@gmail.com" , "Creatives@321.com")
   mail.set_email_subject("Hi better looking Python Generated Subject")
   mail.set_email_body("This email is entirely python generated")
-  #mail.set_attachment_path("/home/rushabh/Rushabh/EasyMail/Test/d2/aaa-TIJ3-distribution")
+  attachment=[["/home/rushabh/Rushabh/EasyMail/Test/d/assignment.pdf"] , ["/home/rushabh/Rushabh/EasyMail/Test/d/gmailScript.py"]]
+  mail.set_attachment_path(attachment)
   mail.send_email()
 
 if __name__ == '__main__':

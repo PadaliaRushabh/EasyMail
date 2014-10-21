@@ -19,6 +19,9 @@ class Handler(object):
 
     text_buffer = email_body.get_buffer()
     email.set_email_body(text_buffer.get_text(text_buffer.get_start_iter() ,text_buffer.get_end_iter(), True))
+
+    if store is not None:
+      email.set_attachment_path(store)
     email.send_email()
     print("Mail Send")
 
@@ -54,5 +57,6 @@ if path is not None:
   #append the file array to liststore
   for i in range(len(path)):
     store.append(path[i])
+
 
 Gtk.main()
