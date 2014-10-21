@@ -123,7 +123,7 @@ class Attachment(object):
           filenamepath = os.path.join(attachment[0] , filename)
           attachment = self.guess_and_get_attachment_type(filenamepath)
           # Set the filename parameter
-          attachment.add_header('Content-Disposition', 'attachment', filename = filenamepath)
+          attachment.add_header('Content-Disposition', 'attachment', filename = os.path.basename(filenamepath))
           print(filenamepath)
           message.attach(attachment)
 
@@ -131,7 +131,7 @@ class Attachment(object):
         attachmentfile = attachment[0]
         attachment = self.guess_and_get_attachment_type(attachmentfile)
         # Set the filename parameter
-        attachment.add_header('Content-Disposition', 'attachment', filename = attachmentfile)
+        attachment.add_header('Content-Disposition', 'attachment', filename = os.path.basename(attachmentfile))
         message.attach(attachment)
       else:
         print("Unable to open file or directory")
