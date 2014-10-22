@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 
-from gi.repository import Gtk
+from gi.repository import Gtk, GObject
 from easymail_lib import Email
 from easymail_lib import Filepath
+from easymail_lib import EmailSendThread
 
 
 class Handler(object):
@@ -26,7 +27,13 @@ class Handler(object):
 
     if this.application.store is not None:
       this.application.email.set_attachment_path(this.application.store)
-    this.application.email.send_email()
+
+    Ethread = EmailSendThread.EmailSendThread(this.application.email)
+    Ethread.setName('SendEmailThread')
+
+    Ethread.start()
+    #Ethread.join()
+    #this.application.email.send_email()
     print("Mail Send")
 
   def gtk_main_quit(this, *args):
@@ -79,6 +86,7 @@ class EasyMailApplication(Gtk.Application):
       for i in range(len(this.path)):
         this.store.append(this.path[i])
 
+GObject.threads_init()
 EasyMail = EasyMailApplication()
 
 Gtk.main()
