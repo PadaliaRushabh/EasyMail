@@ -357,6 +357,8 @@
   <object class="GtkWindow" id="window_create_account">
     <property name="can_focus">False</property>
     <property name="title" translatable="yes">Create Account</property>
+    <signal name="destroy" handler="gtk_main_quit" swapped="no"/>
+    <signal name="destroy-event" handler="gtk_main_quit" swapped="no"/>
     <child>
       <object class="GtkBox" id="box5">
         <property name="visible">True</property>
@@ -585,6 +587,7 @@
             <property name="margin_bottom">5</property>
             <property name="xalign">0</property>
             <property name="draw_indicator">True</property>
+            <signal name="toggled" handler="on_check_default_toggled" swapped="no"/>
           </object>
           <packing>
             <property name="expand">False</property>
@@ -608,6 +611,7 @@
                 <property name="margin_top">5</property>
                 <property name="margin_bottom">5</property>
                 <property name="hexpand">True</property>
+                <signal name="clicked" handler="on_btn_create_clicked" swapped="no"/>
               </object>
               <packing>
                 <property name="left_attach">0</property>
@@ -629,6 +633,7 @@
                 <property name="margin_top">5</property>
                 <property name="margin_bottom">5</property>
                 <property name="hexpand">True</property>
+                <signal name="clicked" handler="on_btn_cancel_clicked" swapped="no"/>
               </object>
               <packing>
                 <property name="left_attach">1</property>
