@@ -1,0 +1,30 @@
+[
+{
+    "default": {
+        "account_name": "personal"
+    },
+    "domain": {
+        "anu.com": [
+            "smtp.anu.com:4554"
+        ],
+        "gmail.com": [
+            "smtp.gmail.com:587",
+            "smtp.gmail.com:588"
+        ]
+    },
+    "personal": {
+        "domain": "gmail.com",
+        "email": "padalia.rushabh@gmail.com",
+        "password": "myPassword",
+        "server": "smtp.gmail.com:584"
+    },
+    "school": {
+        "domain": "anu.com",
+        "email": "u5635863@anu.com",
+        "password": "myPassword",
+        "server": "smtp.anu.com:4554"
+    }
+}
+]
+
+
