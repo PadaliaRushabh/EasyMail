@@ -1,6 +1,6 @@
 {
     "default": {
-        "account_name": "falsetry"
+        "account_name": "pedfrsonal"
     },
     "domain": {
         "anu.com": [
@@ -11,13 +11,7 @@
             "smtp.gmail.com:588"
         ]
     },
-    "dsddf": {
-        "domain": "smtp.email.com",
-        "email": "email@email.com",
-        "password": "newpass",
-        "server": "smtp.email.com"
-    },
-    "falsetry": {
+    "pedfrsonal": {
         "domain": "smtp.emaildfdf.com",
         "email": "email@emaidfdl.com",
         "password": "4545",
@@ -34,29 +28,5 @@
         "email": "u5635863@anu.com",
         "password": "myPassword",
         "server": "smtp.anu.com:4554"
-    },
-    "trueEntry": {
-        "domain": "smtp.email.com",
-        "email": "email@email.com",
-        "password": "newpass",
-        "server": "smtp.email.com"
-    },
-    "trueEntry2": {
-        "domain": "smtp.email.com",
-        "email": "email@email.com",
-        "password": "newpass",
-        "server": "smtp.email.com"
-    },
-    "trueEntry3": {
-        "domain": "smtp.emaildfdf.com",
-        "email": "email@emaidfdl.com",
-        "password": "4545",
-        "server": "smtp.dfdfemail.com"
-    },
-    "trueEntry4": {
-        "domain": "smtp.emaildfdf.com",
-        "email": "email@emaidfdl.com",
-        "password": "4545",
-        "server": "smtp.dfdfemail.com"
     }
 }
