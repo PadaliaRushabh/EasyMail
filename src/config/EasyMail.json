@@ -1,0 +1,29 @@
+{
+    "ANU": {
+        "domain": "gmail.com",
+        "email": "u5635863@anu.edu.au",
+        "password": "sfdlf'dkdgkl;",
+        "server": "el;frjd;ogkf'pgk"
+    },
+    "Personal": {
+        "domain": "gmail.com",
+        "email": "padalia.rushabh@gmail.com",
+        "password": "rushabh",
+        "server": "sdfdfdf"
+    },
+    "RRRR": {
+        "domain": "gmail.com",
+        "email": "dfdfdfd",
+        "password": "ddfdfdf",
+        "server": "dfdfdfd"
+    },
+    "default": {
+        "account_name": "ANU"
+    },
+    "dfdfdf": {
+        "domain": "gmail.com",
+        "email": "dfdfdfd",
+        "password": "ddfdfdf",
+        "server": "dfdfdfd"
+    }
+}
