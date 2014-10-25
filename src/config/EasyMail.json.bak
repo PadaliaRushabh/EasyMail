@@ -1,0 +1,50 @@
+{
+    "default": {
+        "account_name": "pedfrsonaldsd"
+    },
+    "domain": {
+        "anu.com": [
+            "smtp.anu.com:4554"
+        ],
+        "gmail.com": [
+            "smtp.gmail.com:587",
+            "smtp.gmail.com:588"
+        ]
+    },
+    "pedfrsonal": {
+        "domain": "smtp.emaildfdf.com",
+        "email": "email@emaidfdl.com",
+        "password": "4545",
+        "server": "smtp.dfdfemail.com"
+    },
+    "pedfrsonald": {
+        "domain": "smtp.emaildfdf.com",
+        "email": "email@emaidfdl.com",
+        "password": "4545",
+        "server": "smtp.dfdfemail.com"
+    },
+    "pedfrsonaldsd": {
+        "domain": "smtp.emaildfdf.com",
+        "email": "email@emaidfdl.com",
+        "password": "4545",
+        "server": "smtp.dfdfemail.com"
+    },
+    "personal": {
+        "domain": "smtp.emaildfdf.com",
+        "email": "email@emaidfdl.com",
+        "password": "4545",
+        "server": "smtp.dfdfemail.com"
+    },
+    "school": {
+        "domain": "smtp.emaildfdf.com",
+        "email": "email@emaidfdl.com",
+        "password": "4545",
+        "server": "smtp.dfdfemail.com"
+    },
+    "wd": {
+        "domain": "smtp.emaildfdf.com",
+        "email": "email@emaidfdl.com",
+        "password": "4545",
+        "server": "smtp.dfdfemail.com"
+    }
+}
