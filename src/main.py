@@ -17,6 +17,7 @@ class Handler(object):
     Gtk.main_quit(*args)
 
   def on_btn_Send_clicked(this, *args):
+    print(this.application.email)
     this.application.email.set_to_address(this.application.email_to.get_text())
     this.application.email.set_from_address("padalia.rushabh@gmail.com")
 
@@ -47,11 +48,11 @@ class Handler(object):
     json = JSON.JSON(file)
     json_data = json.read_json_from_file()
     json.set_json_data(json_data)
-    json.convert_to_json(this.application.account_name.get_text(),
-                          this.application.password.get_text(),
-                          this.application.email.get_text(),
+    json.convert_to_json(this.application.txt_account_name.get_text(),
+                          this.application.txt_password.get_text(),
+                          this.application.txt_email.get_text(),
                           "gmail.com",
-                          this.application.server.get_text(),
+                          this.application.txt_server.get_text(),
                           this.application.check_default.get_active())
     json.write_json_to_file()
 
@@ -105,10 +106,10 @@ class EasyMailApplication(Gtk.Application):
     #this.window.show_all()
 
     #Email TextBox
-    this.account_name = this.builder.get_object("txt_account_name")
-    this.email = this.builder.get_object("txt_email")
-    this.password = this.builder.get_object("txt_password")
-    this.server = this.builder.get_object("txt_server")
+    this.txt_account_name = this.builder.get_object("txt_account_name")
+    this.txt_email = this.builder.get_object("txt_email")
+    this.txt_password = this.builder.get_object("txt_password")
+    this.txt_server = this.builder.get_object("txt_server")
 
     #Default CheckBox
     this.check_default = this.builder.get_object("check_default")
