@@ -1,6 +1,6 @@
 {
     "default": {
-        "account_name": "pedfrsonal"
+        "account_name": "pedfrsonaldsd"
     },
     "domain": {
         "anu.com": [
@@ -17,16 +17,34 @@
         "password": "4545",
         "server": "smtp.dfdfemail.com"
     },
+    "pedfrsonald": {
+        "domain": "smtp.emaildfdf.com",
+        "email": "email@emaidfdl.com",
+        "password": "4545",
+        "server": "smtp.dfdfemail.com"
+    },
+    "pedfrsonaldsd": {
+        "domain": "smtp.emaildfdf.com",
+        "email": "email@emaidfdl.com",
+        "password": "4545",
+        "server": "smtp.dfdfemail.com"
+    },
     "personal": {
-        "domain": "gmail.com",
-        "email": "padalia.rushabh@gmail.com",
-        "password": "myPassword",
-        "server": "smtp.gmail.com:584"
+        "domain": "smtp.emaildfdf.com",
+        "email": "email@emaidfdl.com",
+        "password": "4545",
+        "server": "smtp.dfdfemail.com"
     },
     "school": {
-        "domain": "anu.com",
-        "email": "u5635863@anu.com",
-        "password": "myPassword",
-        "server": "smtp.anu.com:4554"
+        "domain": "smtp.emaildfdf.com",
+        "email": "email@emaidfdl.com",
+        "password": "4545",
+        "server": "smtp.dfdfemail.com"
+    },
+    "wd": {
+        "domain": "smtp.emaildfdf.com",
+        "email": "email@emaidfdl.com",
+        "password": "4545",
+        "server": "smtp.dfdfemail.com"
     }
 }
