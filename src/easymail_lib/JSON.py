@@ -6,7 +6,6 @@ from pprint import pprint
 
 class JSON(object):
 
-  #json_data = []
   def __init__(this,file,mode = 'r+'):
     this.file = file
     this.mode = mode
@@ -16,32 +15,35 @@ class JSON(object):
     this.mode = mode
 
   def set_json_data(this, json_data):
-    #this.json_data = []
     this.json_data = json_data
-    #this.json_data.append(json_data)
-
-
-  def reinitialize_json_data(this, json_data):
-    this.json_data = []
-    this.json_data.append(json_data)
 
   def append_json_data(this, json_data):
     this.json_data.append(j_data)
 
   def read_json_from_file(this):
     with open(this.file, this.mode) as json_file:
-      #this.json_data = json.load(json_file)
-      #pprint(this.json_data)
-      #return json.dump(this.json_data , indent = 4 , sort_keys=True)
       return json.load(json_file)
 
   def write_json_to_file(this):
     with open(this.file, this.mode) as json_file:
         return json.dump(this.json_data , json_file,indent = 4 , sort_keys=True)
 
+  def update_json(this,json_data,default):
+
+      this.json_data.update(json_data)
+
+  def _create_and_update_json_when_default_is_false(this,name,password,email,domain,server):
+    j_data = {
+      name:{
+      "password": password,
+      "email": email,
+      "domain": domain,
+      "server": server
+      }
+    }
+    this.update_json(j_data,default)
   def convert_to_json(this,name,password,email,domain,server,default):
-'''
-    if default is True:
+    if default is False:
       j_data = {
         name:{
         "password": password,
@@ -50,42 +52,35 @@ class JSON(object):
         "server": server
         }
       }
-      this.json_data.append(j_data)
-      pprint(this.json_data)
-      #check if any email is default
-      defaultkey = False;
-      complete_json = []
-      for json in this.json_data:
-        print('next')
-        pprint(json)
-        defaultKey = json.get("default", False)
-
-        if defaultKey is not False: #if False then make a new entry
-          json['default']['account_name'] = name #else update the default value to the new value
-
-          #this.reinitialize_json_data(json)
-
+      this.update_json(j_data,default)
+    else:
+      defaultKey = this.json_data.get("default", False)
 
       if defaultKey is False:
-        j_data= {
-          "default":{
-          "account_name":name
+        j_data = {
+          name:{
+          "password": password,
+          "email": email,
+          "domain": domain,
+          "server": server
+          },
+          "default": {
+          "account_name": name
           }
         }
-        this.json_data.append(j_data)
-
-    else:
-      j_data = {
-        name:{
-        "password": password,
-        "email": email,
-        "domain": domain,
-        "server": server
+        this.update_json(j_data,default)
+      else:
+        j_data = {
+          name:{
+          "password": password,
+          "email": email,
+          "domain": domain,
+          "server": server
+          }
         }
-      }
-      this.json_data.append(j_data)
+        this.update_json(j_data,False)
 
-'''
+        this.json_data['default']['account_name'] = name
 
 def main():
 
@@ -105,9 +100,9 @@ def main():
   '''
   json_data = json.read_json_from_file()
   json.set_json_data(json_data)
-  json.convert_to_json("dsddf" , "newpass", "email@email.com" , "smtp.email.com" , "smtp.email.com" , True)
-  #json.write_json_to_file()
-  #pprint(json_data[1])
+  json.convert_to_json("falsetry" , "4545", "email@emaidfdl.com" , "smtp.emaildfdf.com" , "smtp.dfdfemail.com" , True)
+  json.write_json_to_file()
+
 
 
 
