@@ -4,6 +4,8 @@ from gi.repository import Gtk, GObject
 from easymail_lib import Email
 from easymail_lib import Filepath
 from easymail_lib import EmailSendThread
+from easymail_lib import JSON
+#from AccountCreate import CreateAccount
 
 
 class Handler(object):
@@ -39,11 +41,38 @@ class Handler(object):
   def gtk_main_quit(this, *args):
     Gtk.main_quit(*args)
 
+  def on_btn_create_clicked(this, *args):
+    print("button")
+    file = "/home/rushabh/Rushabh/EasyMail/src/config/EasyMail.json"
+    json = JSON.JSON(file)
+    json_data = json.read_json_from_file()
+    json.set_json_data(json_data)
+    json.convert_to_json(this.application.account_name.get_text(),
+                          this.application.password.get_text(),
+                          this.application.email.get_text(),
+                          "gmail.com",
+                          this.application.server.get_text(),
+                          this.application.check_default.get_active())
+    json.write_json_to_file()
+
+  def on_check_default_toggled(this, checkbox):
+
+    if checkbox.get_active() is False:
+      this.default_pressed = True
+    else:
+      this.default_pressed = False
+
+
+  def on_menu_create_account_activate(this, *args):
+    #create_account = CreateAccount(this.application.builder)
+    this.application.window_account_create.show_all()
+
 class EasyMailApplication(Gtk.Application):
   def __init__(this):
     this.setWidgets()
     this.initEmail()
     this.setAttachmentPath()
+    this.setWidgets_accountCreate()
 
   def setWidgets(this):
     this.builder = Gtk.Builder()
@@ -69,6 +98,25 @@ class EasyMailApplication(Gtk.Application):
 
     #statusbar
     this.statusbar = this.builder.get_object("statusbar")
+
+
+  def setWidgets_accountCreate(this):
+    this.window_account_create = this.builder.get_object("window_create_account")
+    #this.window.show_all()
+
+    #Email TextBox
+    this.account_name = this.builder.get_object("txt_account_name")
+    this.email = this.builder.get_object("txt_email")
+    this.password = this.builder.get_object("txt_password")
+    this.server = this.builder.get_object("txt_server")
+
+    #Default CheckBox
+    this.check_default = this.builder.get_object("check_default")
+    this.check_default.set_active(False)
+    this.default_pressed = this.check_default.get_active()
+
+    #statusbar
+    this.statusbar_account_create = this.builder.get_object("statusbar_account_creation")
 
   def initEmail(this):
     #init Email Object
