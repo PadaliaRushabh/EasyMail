@@ -13,8 +13,9 @@ class Handler(object):
   def on_btn_create_clicked(this, *args):
 
     file = "/home/rushabh/Rushabh/EasyMail/src/config/EasyMail.json"
-    mode = 'w+'
-    json = JSON.JSON(file,mode)
+    json = JSON.JSON(file)
+    json_data = json.read_json_from_file()
+    json.set_json_data(json_data)
     json.convert_to_json(create_account.account_name.get_text(),
                           create_account.password.get_text(),
                           create_account.email.get_text(),
