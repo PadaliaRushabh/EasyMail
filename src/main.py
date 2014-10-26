@@ -66,7 +66,21 @@ class Handler(object):
 
   def on_menu_create_account_activate(this, *args):
     #create_account = CreateAccount(this.application.builder)
+    #this.application.setWidgets_accountCreate()
     this.application.window_account_create.show_all()
+
+
+  def on_window_create_account_delete_event(this , *args):
+      #Email TextBox
+      this.application.txt_account_name.set_text("")
+      this.application.txt_email.set_text("")
+      this.application.txt_password.set_text("")
+      this.application.txt_server.set_text("")
+
+      #Default CheckBox
+      this.application.check_default.set_active(False)
+      this.application.window_account_create.hide()
+      return True
 
 class EasyMailApplication(Gtk.Application):
   def __init__(this):
@@ -74,6 +88,7 @@ class EasyMailApplication(Gtk.Application):
     this.initEmail()
     this.setAttachmentPath()
     this.setWidgets_accountCreate()
+
 
   def setWidgets(this):
     this.builder = Gtk.Builder()
