@@ -37,13 +37,12 @@ class Handler(object):
     Ethread.start()
     #Ethread.join()
     #this.application.email.send_email()
-    print("Mail Send")
+    #print("Mail Send")
 
   def gtk_main_quit(this, *args):
     Gtk.main_quit(*args)
 
   def on_btn_create_clicked(this, *args):
-    print("button")
     file = "/home/rushabh/Rushabh/EasyMail/src/config/EasyMail.json"
     json = JSON.JSON(file)
     json_data = json.read_json_from_file()
@@ -55,6 +54,13 @@ class Handler(object):
                           this.application.txt_server.get_text(),
                           this.application.check_default.get_active())
     json.write_json_to_file()
+
+  def on_popup_menu_add_attachment(this, *args):
+    print("add")
+
+  def on_attachment_view_button_press_event(this, *agrs):
+    this.application.menu_add.show_all()
+    print("pressed")
 
   def on_check_default_toggled(this, checkbox):
 
@@ -68,6 +74,14 @@ class Handler(object):
     #create_account = CreateAccount(this.application.builder)
     #this.application.setWidgets_accountCreate()
     this.application.window_account_create.show_all()
+
+  def on_popup_menu_add_attachment_focus_out_event(this, *args):
+
+    this.application.menu_add.hide()
+    print("hide")
+
+
+
 
 
   def on_window_create_account_delete_event(this , *args):
@@ -88,6 +102,7 @@ class EasyMailApplication(Gtk.Application):
     this.initEmail()
     this.setAttachmentPath()
     this.setWidgets_accountCreate()
+    this.setWidgets_popup()
 
 
   def setWidgets(this):
@@ -98,7 +113,7 @@ class EasyMailApplication(Gtk.Application):
     this.window.show_all()
 
     #Email TextBox
-    this.email_to = this.builder.get_object("txt_email_to")
+    this.email_to = this.builder.get_object("stxt_email_to")
     this.email_subject = this.builder.get_object("txt_email_subject")
     this.email_body = this.builder.get_object("txt_email_body")
 
@@ -133,6 +148,12 @@ class EasyMailApplication(Gtk.Application):
 
     #statusbar
     this.statusbar_account_create = this.builder.get_object("statusbar_account_creation")
+
+  def setWidgets_popup(this):
+    #popup Menu
+    this.menu_add = this.builder.get_object("popup_menu_add_attachment")
+
+    #this.menu_add_remove= this.builder.get_object("menu_add_remove_attachments")
 
   def initEmail(this):
     #init Email Object

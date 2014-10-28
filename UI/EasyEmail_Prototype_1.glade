@@ -165,7 +165,7 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkSearchEntry" id="tx_email_to">
+                  <object class="GtkSearchEntry" id="stxt_email_to">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="margin_left">16</property>
@@ -173,6 +173,7 @@
                     <property name="margin_top">5</property>
                     <property name="margin_bottom">5</property>
                     <property name="primary_icon_name">edit-find-symbolic</property>
+                    <property name="completion">entrycompletion_email</property>
                   </object>
                   <packing>
                     <property name="expand">True</property>
@@ -335,6 +336,7 @@
                 <property name="vexpand">True</property>
                 <property name="model">liststore</property>
                 <property name="ubuntu_almost_fixed_height_mode">True</property>
+                <signal name="button-press-event" handler="on_attachment_view_button_press_event" swapped="no"/>
                 <child internal-child="selection">
                   <object class="GtkTreeSelection" id="treeview-selection2"/>
                 </child>
@@ -457,9 +459,36 @@
       </object>
     </child>
   </object>
+  <object class="GtkWindow" id="popup_menu_add_attachment">
+    <property name="can_focus">False</property>
+    <property name="is_focus">True</property>
+    <property name="margin_top">4</property>
+    <property name="hexpand">True</property>
+    <property name="vexpand">True</property>
+    <property name="modal">True</property>
+    <property name="window_position">mouse</property>
+    <property name="type_hint">popup-menu</property>
+    <signal name="focus-out-event" handler="on_popup_menu_add_attachment_focus_out_event" swapped="no"/>
+    <child>
+      <object class="GtkLabel" id="menu_item_add_attachment">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="margin_left">5</property>
+        <property name="margin_right">5</property>
+        <property name="margin_top">5</property>
+        <property name="margin_bottom">5</property>
+        <property name="hexpand">True</property>
+        <property name="vexpand">True</property>
+        <property name="label" translatable="yes">Add Attachment</property>
+        <property name="justify">center</property>
+        <property name="ellipsize">middle</property>
+      </object>
+    </child>
+  </object>
   <object class="GtkWindow" id="window_create_account">
     <property name="can_focus">False</property>
     <property name="title" translatable="yes">Create Account</property>
+    <property name="window_position">center-on-parent</property>
     <signal name="delete-event" handler="on_window_create_account_delete_event" swapped="no"/>
     <child>
       <object class="GtkBox" id="box5">
