@@ -11,7 +11,7 @@ class Handler(object):
 
   def __init__(this, application):
     this.application = application
-    this.selected = None
+    this.selection = None
 
   def on_btn_cancel_clicked(this, *args):
     Gtk.main_quit(*args)
@@ -63,16 +63,27 @@ class Handler(object):
     if response == Gtk.ResponseType.OK:
       files = file_dialog.get_filenames()
       for file in files:
-        f = [file] #convert each to file and then append
+        f = [file] #convert each to file and then append1
         this.application.store.append(f)
 
       file_dialog.destroy()
+
+  def on_popup_button_remove_attachment_clicked(this , *args):
+
+    (model, pathlist) = this.selection.get_selected_rows()
+    for path in pathlist: #pass path number in path
+        tree_iter = model.get_iter(path)
+
+    model.remove(tree_iter)
 
   def on_treeview_selection_changed(this,selection):
     (model, pathlist) = selection.get_selected_rows()
 
     if pathlist is None:
-      this.selected = None
+      this.selection = None
+
+    this.selection = selection
+
 
     for path in pathlist: #pass path number in path
         tree_iter = model.get_iter(path)
@@ -81,7 +92,7 @@ class Handler(object):
 
   def on_attachment_view_button_press_event(this, treeview , event):
       if event.button == 3: # if right click pressed
-        if this.selected is not None:
+        if this.selection is not None:
           this.application.menu_add_remove.show_all()
         else:
           this.application.menu_add.show_all()
