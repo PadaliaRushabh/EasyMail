@@ -11,6 +11,69 @@
     <property name="primary_icon_sensitive">False</property>
     <property name="completion">entrycompletion_email</property>
   </object>
+  <object class="GtkFileChooserDialog" id="filechooserdialog">
+    <property name="can_focus">False</property>
+    <property name="type">popup</property>
+    <property name="title" translatable="yes">Select Attachment to Send</property>
+    <property name="modal">True</property>
+    <property name="destroy_with_parent">True</property>
+    <property name="type_hint">normal</property>
+    <child internal-child="vbox">
+      <object class="GtkBox" id="filechooserdialog-vbox1">
+        <property name="can_focus">False</property>
+        <property name="orientation">vertical</property>
+        <property name="spacing">2</property>
+        <child internal-child="action_area">
+          <object class="GtkButtonBox" id="filechooserdialog-action_area1">
+            <property name="can_focus">False</property>
+            <property name="layout_style">end</property>
+            <child>
+              <object class="GtkButton" id="button1">
+                <property name="label">gtk-open</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+                <property name="relief">half</property>
+                <property name="use_stock">True</property>
+                <property name="xalign">0.50999999046325684</property>
+                <property name="yalign">0.50999999046325684</property>
+                <property name="always_show_image">True</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkButton" id="button2">
+                <property name="label">gtk-cancel</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+                <property name="use_stock">True</property>
+                <property name="always_show_image">True</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="pack_type">end</property>
+            <property name="position">0</property>
+          </packing>
+        </child>
+        <child>
+          <placeholder/>
+        </child>
+      </object>
+    </child>
+  </object>
   <object class="GtkImage" id="image1">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
@@ -338,7 +401,9 @@
                 <property name="ubuntu_almost_fixed_height_mode">True</property>
                 <signal name="button-press-event" handler="on_attachment_view_button_press_event" swapped="no"/>
                 <child internal-child="selection">
-                  <object class="GtkTreeSelection" id="treeview-selection2"/>
+                  <object class="GtkTreeSelection" id="treeview-selection2">
+                    <signal name="changed" handler="on_treeview_selection_changed" swapped="no"/>
+                  </object>
                 </child>
                 <child>
                   <object class="GtkTreeViewColumn" id="treeviewcolumn">
@@ -461,7 +526,6 @@
   </object>
   <object class="GtkWindow" id="popup_menu_add_attachment">
     <property name="can_focus">False</property>
-    <property name="is_focus">True</property>
     <property name="hexpand">True</property>
     <property name="vexpand">True</property>
     <property name="modal">True</property>
@@ -469,18 +533,72 @@
     <property name="type_hint">popup-menu</property>
     <signal name="focus-out-event" handler="on_popup_menu_add_attachment_focus_out_event" swapped="no"/>
     <child>
-      <object class="GtkLabel" id="menu_item_add_attachment">
+      <object class="GtkBox" id="box10">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
-        <property name="margin_left">5</property>
-        <property name="margin_right">5</property>
-        <property name="margin_top">5</property>
-        <property name="margin_bottom">5</property>
-        <property name="hexpand">True</property>
-        <property name="vexpand">True</property>
-        <property name="label" translatable="yes">Add Attachment</property>
-        <property name="justify">center</property>
-        <property name="ellipsize">middle</property>
+        <property name="orientation">vertical</property>
+        <child>
+          <object class="GtkButton" id="popup_button_add_attachment1">
+            <property name="label" translatable="yes">Add Attachment</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="relief">none</property>
+            <signal name="clicked" handler="on_popup_button_add_attachment_clicked" swapped="no"/>
+          </object>
+          <packing>
+            <property name="expand">True</property>
+            <property name="fill">True</property>
+            <property name="position">0</property>
+          </packing>
+        </child>
+      </object>
+    </child>
+  </object>
+  <object class="GtkWindow" id="popup_menu_add_remove_attachment">
+    <property name="can_focus">False</property>
+    <property name="is_focus">True</property>
+    <property name="hexpand">True</property>
+    <property name="vexpand">True</property>
+    <property name="modal">True</property>
+    <property name="window_position">mouse</property>
+    <property name="type_hint">popup-menu</property>
+    <signal name="focus-out-event" handler="on_popup_menu_add_remove_attachment_focus_out_event" swapped="no"/>
+    <child>
+      <object class="GtkBox" id="box6">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="orientation">vertical</property>
+        <child>
+          <object class="GtkButton" id="popup_button_add_attachment">
+            <property name="label" translatable="yes">Add Attachment</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="relief">none</property>
+            <signal name="clicked" handler="on_popup_button_add_attachment_clicked" swapped="no"/>
+          </object>
+          <packing>
+            <property name="expand">True</property>
+            <property name="fill">True</property>
+            <property name="position">0</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkButton" id="popup_button_remove_attachment">
+            <property name="label" translatable="yes">Remove Selected Attachment</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="relief">none</property>
+            <signal name="clicked" handler="on_popup_button_remove_attachment_clicked" swapped="no"/>
+          </object>
+          <packing>
+            <property name="expand">True</property>
+            <property name="fill">True</property>
+            <property name="position">1</property>
+          </packing>
+        </child>
       </object>
     </child>
   </object>
