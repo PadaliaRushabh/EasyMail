@@ -11,6 +11,7 @@ class Handler(object):
 
   def __init__(this, application):
     this.application = application
+    this.selected = None
 
   def on_btn_cancel_clicked(this, *args):
     Gtk.main_quit(*args)
@@ -68,11 +69,23 @@ class Handler(object):
       file_dialog.destroy()
 
   def on_treeview_selection_changed(this,selection):
-    print("Selected")
+    (model, pathlist) = selection.get_selected_rows()
+
+    if pathlist is None:
+      this.selected = None
+
+    for path in pathlist: #pass path number in path
+        tree_iter = model.get_iter(path)
+        value = model.get_value(tree_iter,0)
+        this.selected = value
 
   def on_attachment_view_button_press_event(this, treeview , event):
       if event.button == 3: # if right click pressed
-        this.application.menu_add.show_all()
+        if this.selected is not None:
+          this.application.menu_add_remove.show_all()
+        else:
+          this.application.menu_add.show_all()
+
 
   def on_check_default_toggled(this, checkbox):
 
@@ -86,6 +99,9 @@ class Handler(object):
     #create_account = CreateAccount(this.application.builder)
     #this.application.setWidgets_accountCreate()
     this.application.window_account_create.show_all()
+
+  def on_popup_menu_add_remove_attachment_focus_out_event(this, *args):
+    this.application.menu_add_remove.hide()
 
   def on_popup_menu_add_attachment_focus_out_event(this, *args):
     this.application.menu_add.hide()
@@ -141,6 +157,10 @@ class EasyMailApplication(Gtk.Application):
     this.window_account_create = this.builder.get_object("window_create_account")
     #this.window.show_all()
 
+    #remove attachment button
+    this.popup_button_remove_attachment = this.builder.get_object("popup_button_remove_attachment")
+    #this.popup_menu_add_attachment = this.builder.get_object("popup_menu_add_attachment")
+
     #Email TextBox
     this.txt_account_name = this.builder.get_object("txt_account_name")
     this.txt_email = this.builder.get_object("txt_email")
@@ -157,6 +177,7 @@ class EasyMailApplication(Gtk.Application):
 
   def setWidgets_popup(this):
     #popup Menu
+    this.menu_add_remove = this.builder.get_object("popup_menu_add_remove_attachment")
     this.menu_add = this.builder.get_object("popup_menu_add_attachment")
     #this.filechooser = this.builder.get_object("filechooserdialog")
 

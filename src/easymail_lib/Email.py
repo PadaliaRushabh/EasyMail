@@ -124,7 +124,6 @@ class Attachment(object):
           attachment = self.guess_and_get_attachment_type(filenamepath)
           # Set the filename parameter
           attachment.add_header('Content-Disposition', 'attachment', filename = os.path.basename(filenamepath))
-          print(filenamepath)
           message.attach(attachment)
 
       elif(self.is_file(attachment[0])):
