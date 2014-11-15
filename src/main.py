@@ -5,7 +5,6 @@ from easymail_lib import Email
 from easymail_lib import Filepath
 from easymail_lib import EmailSendThread
 from easymail_lib import JSON
-#from AccountCreate import CreateAccount
 
 
 class Handler(object):
@@ -57,8 +56,6 @@ class Handler(object):
 
 
   def on_popup_button_add_attachment_clicked(this, *args):
-
-
     file_dialog = Gtk.FileChooserDialog("Select Attachment to Send" , None, Gtk.FileChooserAction.OPEN , (Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL, Gtk.STOCK_OPEN, Gtk.ResponseType.OK))
     Gtk.FileChooser.set_select_multiple(file_dialog , True)
     response  = file_dialog.run()
@@ -70,9 +67,12 @@ class Handler(object):
 
       file_dialog.destroy()
 
-  def on_attachment_view_button_press_event(this, *agrs):
-    this.application.menu_add.show_all()
-    print("pressed")
+  def on_treeview_selection_changed(this,selection):
+    print("Selected")
+
+  def on_attachment_view_button_press_event(this, treeview , event):
+      if event.button == 3: # if right click pressed
+        this.application.menu_add.show_all()
 
   def on_check_default_toggled(this, checkbox):
 
@@ -88,13 +88,7 @@ class Handler(object):
     this.application.window_account_create.show_all()
 
   def on_popup_menu_add_attachment_focus_out_event(this, *args):
-
     this.application.menu_add.hide()
-    print("hide")
-
-
-
-
 
   def on_window_create_account_delete_event(this , *args):
       #Email TextBox
