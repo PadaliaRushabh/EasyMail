@@ -5,6 +5,12 @@
         "password": "sfdlf'dkdgkl;",
         "server": "el;frjd;ogkf'pgk"
     },
+    "JCU": {
+        "domain": "gmail.com",
+        "email": "rushabhrajeshkumar.padalia@my.jcu.edu.au",
+        "password": "thisismypassword",
+        "server": "my.jcu.edu.au"
+    },
     "Personal": {
         "domain": "gmail.com",
         "email": "padalia.rushabh@gmail.com",
@@ -24,7 +30,7 @@
         "server": "klhklnk"
     },
     "default": {
-        "account_name": "Yeh"
+        "account_name": "JCU"
     },
     "dfdfdf": {
         "domain": "gmail.com",

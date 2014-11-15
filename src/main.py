@@ -55,8 +55,20 @@ class Handler(object):
                           this.application.check_default.get_active())
     json.write_json_to_file()
 
-  def on_popup_menu_add_attachment(this, *args):
-    print("add")
+
+  def on_popup_button_add_attachment_clicked(this, *args):
+
+
+    file_dialog = Gtk.FileChooserDialog("Select Attachment to Send" , None, Gtk.FileChooserAction.OPEN , (Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL, Gtk.STOCK_OPEN, Gtk.ResponseType.OK))
+    Gtk.FileChooser.set_select_multiple(file_dialog , True)
+    response  = file_dialog.run()
+    if response == Gtk.ResponseType.OK:
+      files = file_dialog.get_filenames()
+      for file in files:
+        f = [file] #convert each to file and then append
+        this.application.store.append(f)
+
+      file_dialog.destroy()
 
   def on_attachment_view_button_press_event(this, *agrs):
     this.application.menu_add.show_all()
@@ -152,6 +164,9 @@ class EasyMailApplication(Gtk.Application):
   def setWidgets_popup(this):
     #popup Menu
     this.menu_add = this.builder.get_object("popup_menu_add_attachment")
+    #this.filechooser = this.builder.get_object("filechooserdialog")
+
+
 
     #this.menu_add_remove= this.builder.get_object("menu_add_remove_attachments")
 
