@@ -9,54 +9,54 @@ from easymail_lib import JSON
 
 class Handler(object):
 
-  def __init__(this, application):
-    this.application = application
-    this.selection = None
+  def __init__(self, application):
+    self.application = application
+    self.selection = None
 
-  def on_btn_cancel_clicked(this, *args):
+  def on_btn_cancel_clicked(self, *args):
     Gtk.main_quit(*args)
 
-  def on_btn_Send_clicked(this, *args):
-    print(this.application.email)
-    this.application.email.set_to_address(this.application.email_to.get_text())
-    this.application.email.set_from_address("padalia.rushabh@gmail.com")
+  def on_btn_Send_clicked(self, *args):
+    print(self.application.email)
+    self.application.email.set_to_address(self.application.email_to.get_text())
+    self.application.email.set_from_address("padalia.rushabh@gmail.com")
 
-    this.application.email.set_email_subject(this.application.email_subject.get_text())
-    this.application.email.set_email_server("smtp.gmail.com:587")
-    this.application.email.set_username_and_password("padalia.rushabh@gmail.com" , "Creatives@321.com")
+    self.application.email.set_email_subject(self.application.email_subject.get_text())
+    self.application.email.set_email_server("smtp.gmail.com:587")
+    self.application.email.set_username_and_password("padalia.rushabh@gmail.com" , "Creatives@321.com")
 
-    text_buffer = this.application.email_body.get_buffer()
-    this.application.email.set_email_body(text_buffer.get_text(text_buffer.get_start_iter() ,text_buffer.get_end_iter(), True))
+    text_buffer = self.application.email_body.get_buffer()
+    self.application.email.set_email_body(text_buffer.get_text(text_buffer.get_start_iter() ,text_buffer.get_end_iter(), True))
 
-    if this.application.store is not None:
-      this.application.email.set_attachment_path(this.application.store)
+    if self.application.store is not None:
+      self.application.email.set_attachment_path(self.application.store)
 
-    Ethread = EmailSendThread.EmailSendThread(this.application.email)
+    Ethread = EmailSendThread.EmailSendThread(self.application.email)
     Ethread.setName('SendEmailThread')
 
     Ethread.start()
     #Ethread.join()
-    #this.application.email.send_email()
+    #self.application.email.send_email()
     #print("Mail Send")
 
-  def gtk_main_quit(this, *args):
+  def gtk_main_quit(self, *args):
     Gtk.main_quit(*args)
 
-  def on_btn_create_clicked(this, *args):
+  def on_btn_create_clicked(self, *args):
     file = "/home/rushabh/Rushabh/EasyMail/src/config/EasyMail.json"
     json = JSON.JSON(file)
     json_data = json.read_json_from_file()
     json.set_json_data(json_data)
-    json.convert_to_json(this.application.txt_account_name.get_text(),
-                          this.application.txt_password.get_text(),
-                          this.application.txt_email.get_text(),
+    json.convert_to_json(self.application.txt_account_name.get_text(),
+                          self.application.txt_password.get_text(),
+                          self.application.txt_email.get_text(),
                           "gmail.com",
-                          this.application.txt_server.get_text(),
-                          this.application.check_default.get_active())
+                          self.application.txt_server.get_text(),
+                          self.application.check_default.get_active())
     json.write_json_to_file()
 
 
-  def on_popup_button_add_attachment_clicked(this, *args):
+  def on_popup_button_add_attachment_clicked(self, *args):
     file_dialog = Gtk.FileChooserDialog("Select Attachment to Send" , None, Gtk.FileChooserAction.OPEN , (Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL, Gtk.STOCK_OPEN, Gtk.ResponseType.OK))
     Gtk.FileChooser.set_select_multiple(file_dialog , True)
     response  = file_dialog.run()
@@ -64,153 +64,153 @@ class Handler(object):
       files = file_dialog.get_filenames()
       for file in files:
         f = [file] #convert each to file and then append1
-        this.application.store.append(f)
+        self.application.store.append(f)
 
       file_dialog.destroy()
 
-  def on_popup_button_remove_attachment_clicked(this , *args):
+  def on_popup_button_remove_attachment_clicked(self , *args):
 
-    (model, pathlist) = this.selection.get_selected_rows()
+    (model, pathlist) = self.selection.get_selected_rows()
     for path in pathlist: #pass path number in path
         tree_iter = model.get_iter(path)
 
     model.remove(tree_iter)
 
-  def on_treeview_selection_changed(this,selection):
+  def on_treeview_selection_changed(self,selection):
     (model, pathlist) = selection.get_selected_rows()
 
     if pathlist is None:
-      this.selection = None
+      self.selection = None
 
-    this.selection = selection
+    self.selection = selection
 
 
     for path in pathlist: #pass path number in path
         tree_iter = model.get_iter(path)
         value = model.get_value(tree_iter,0)
-        this.selected = value
+        self.selected = value
 
-  def on_attachment_view_button_press_event(this, treeview , event):
+  def on_attachment_view_button_press_event(self, treeview , event):
       if event.button == 3: # if right click pressed
-        if this.selection is not None:
-          this.application.menu_add_remove.show_all()
+        if self.selection is not None:
+          self.application.menu_add_remove.show_all()
         else:
-          this.application.menu_add.show_all()
+          self.application.menu_add.show_all()
 
 
-  def on_check_default_toggled(this, checkbox):
+  def on_check_default_toggled(self, checkbox):
 
     if checkbox.get_active() is False:
-      this.default_pressed = True
+      self.default_pressed = True
     else:
-      this.default_pressed = False
+      self.default_pressed = False
 
 
-  def on_menu_create_account_activate(this, *args):
-    #create_account = CreateAccount(this.application.builder)
-    #this.application.setWidgets_accountCreate()
-    this.application.window_account_create.show_all()
+  def on_menu_create_account_activate(self, *args):
+    #create_account = CreateAccount(self.application.builder)
+    #self.application.setWidgets_accountCreate()
+    self.application.window_account_create.show_all()
 
-  def on_popup_menu_add_remove_attachment_focus_out_event(this, *args):
-    this.application.menu_add_remove.hide()
+  def on_popup_menu_add_remove_attachment_focus_out_event(self, *args):
+    self.application.menu_add_remove.hide()
 
-  def on_popup_menu_add_attachment_focus_out_event(this, *args):
-    this.application.menu_add.hide()
+  def on_popup_menu_add_attachment_focus_out_event(self, *args):
+    self.application.menu_add.hide()
 
-  def on_window_create_account_delete_event(this , *args):
+  def on_window_create_account_delete_event(self , *args):
       #Email TextBox
-      this.application.txt_account_name.set_text("")
-      this.application.txt_email.set_text("")
-      this.application.txt_password.set_text("")
-      this.application.txt_server.set_text("")
+      self.application.txt_account_name.set_text("")
+      self.application.txt_email.set_text("")
+      self.application.txt_password.set_text("")
+      self.application.txt_server.set_text("")
 
       #Default CheckBox
-      this.application.check_default.set_active(False)
-      this.application.window_account_create.hide()
+      self.application.check_default.set_active(False)
+      self.application.window_account_create.hide()
       return True
 
 class EasyMailApplication(Gtk.Application):
-  def __init__(this):
-    this.setWidgets()
-    this.initEmail()
-    this.setAttachmentPath()
-    this.setWidgets_accountCreate()
-    this.setWidgets_popup()
+  def __init__(self):
+    self.setWidgets()
+    self.initEmail()
+    self.setAttachmentPath()
+    self.setWidgets_accountCreate()
+    self.setWidgets_popup()
 
 
-  def setWidgets(this):
-    this.builder = Gtk.Builder()
-    this.builder.add_from_file("/home/rushabh/Rushabh/EasyMail/UI/EasyEmail_Prototype_1.glade")
-    this.builder.connect_signals(Handler(this))
-    this.window = this.builder.get_object("window_easymail")
-    this.window.show_all()
+  def setWidgets(self):
+    self.builder = Gtk.Builder()
+    self.builder.add_from_file("/home/rushabh/Rushabh/EasyMail/UI/EasyEmail_Prototype_1.glade")
+    self.builder.connect_signals(Handler(self))
+    self.window = self.builder.get_object("window_easymail")
+    self.window.show_all()
 
     #Email TextBox
-    this.email_to = this.builder.get_object("stxt_email_to")
-    this.email_subject = this.builder.get_object("txt_email_subject")
-    this.email_body = this.builder.get_object("txt_email_body")
+    self.email_to = self.builder.get_object("stxt_email_to")
+    self.email_subject = self.builder.get_object("txt_email_subject")
+    self.email_body = self.builder.get_object("txt_email_body")
 
     #Treeview
-    this.view = this.builder.get_object("attachment_view")
-    this.store = this.builder.get_object("liststore")
-    this.col = this.builder.get_object("treeviewcolumn")
-    this.cell = this.builder.get_object("cellrenderertext")
+    self.view = self.builder.get_object("attachment_view")
+    self.store = self.builder.get_object("liststore")
+    self.col = self.builder.get_object("treeviewcolumn")
+    self.cell = self.builder.get_object("cellrenderertext")
 
     #Progressbar
-    this.parogressbar = this.builder.get_object("progressbar")
+    self.parogressbar = self.builder.get_object("progressbar")
 
 
     #statusbar
-    this.statusbar = this.builder.get_object("statusbar")
+    self.statusbar = self.builder.get_object("statusbar")
 
 
-  def setWidgets_accountCreate(this):
-    this.window_account_create = this.builder.get_object("window_create_account")
-    #this.window.show_all()
+  def setWidgets_accountCreate(self):
+    self.window_account_create = self.builder.get_object("window_create_account")
+    #self.window.show_all()
 
     #remove attachment button
-    this.popup_button_remove_attachment = this.builder.get_object("popup_button_remove_attachment")
-    #this.popup_menu_add_attachment = this.builder.get_object("popup_menu_add_attachment")
+    self.popup_button_remove_attachment = self.builder.get_object("popup_button_remove_attachment")
+    #self.popup_menu_add_attachment = self.builder.get_object("popup_menu_add_attachment")
 
     #Email TextBox
-    this.txt_account_name = this.builder.get_object("txt_account_name")
-    this.txt_email = this.builder.get_object("txt_email")
-    this.txt_password = this.builder.get_object("txt_password")
-    this.txt_server = this.builder.get_object("txt_server")
+    self.txt_account_name = self.builder.get_object("txt_account_name")
+    self.txt_email = self.builder.get_object("txt_email")
+    self.txt_password = self.builder.get_object("txt_password")
+    self.txt_server = self.builder.get_object("txt_server")
 
     #Default CheckBox
-    this.check_default = this.builder.get_object("check_default")
-    this.check_default.set_active(False)
-    this.default_pressed = this.check_default.get_active()
+    self.check_default = self.builder.get_object("check_default")
+    self.check_default.set_active(False)
+    self.default_pressed = self.check_default.get_active()
 
     #statusbar
-    this.statusbar_account_create = this.builder.get_object("statusbar_account_creation")
+    self.statusbar_account_create = self.builder.get_object("statusbar_account_creation")
 
-  def setWidgets_popup(this):
+  def setWidgets_popup(self):
     #popup Menu
-    this.menu_add_remove = this.builder.get_object("popup_menu_add_remove_attachment")
-    this.menu_add = this.builder.get_object("popup_menu_add_attachment")
-    #this.filechooser = this.builder.get_object("filechooserdialog")
+    self.menu_add_remove = self.builder.get_object("popup_menu_add_remove_attachment")
+    self.menu_add = self.builder.get_object("popup_menu_add_attachment")
+    #self.filechooser = self.builder.get_object("filechooserdialog")
 
 
 
-    #this.menu_add_remove= this.builder.get_object("menu_add_remove_attachments")
+    #self.menu_add_remove= self.builder.get_object("menu_add_remove_attachments")
 
-  def initEmail(this):
+  def initEmail(self):
     #init Email Object
-    this.email = Email.EasyMail()
+    self.email = Email.EasyMail()
 
-  def setAttachmentPath(this):
+  def setAttachmentPath(self):
     #get hilighted file path
-    this.filepath = Filepath.FilePath()
-    this.path = this.filepath.getSelectedFilepath()
-    this.setAttachmentPathToTree()
+    self.filepath = Filepath.FilePath()
+    self.path = self.filepath.getSelectedFilepath()
+    self.setAttachmentPathToTree()
 
-  def setAttachmentPathToTree(this):
-    if this.path is not None:
+  def setAttachmentPathToTree(self):
+    if self.path is not None:
       #append the file array to liststore
-      for i in range(len(this.path)):
-        this.store.append(this.path[i])
+      for i in range(len(self.path)):
+        self.store.append(self.path[i])
 
 GObject.threads_init()
 EasyMail = EasyMailApplication()

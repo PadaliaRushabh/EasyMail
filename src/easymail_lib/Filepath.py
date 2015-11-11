@@ -2,14 +2,14 @@
 import os
 
 class FilePath(object):
-  def getSelectedFilepath(this):
+  def getSelectedFilepath(self):
     paths = os.environ.get('NAUTILUS_SCRIPT_SELECTED_FILE_PATHS', None)
 
     if paths is not None:
-      return this.toDoubleArray(paths)
+      return self.toDoubleArray(paths)
     return paths
 
-  def toDoubleArray(this, paths):
+  def toDoubleArray(self, paths):
     if paths is not None:
       paths = paths.splitlines()
       #make files array

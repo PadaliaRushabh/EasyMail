@@ -4,42 +4,42 @@ from pprint import pprint
 
 class JSON(object):
 
-  def __init__(this,file,mode = 'r+'):
-    this.file = file
-    this.mode = mode
+  def __init__(self,file,mode = 'r+'):
+    self.file = file
+    self.mode = mode
 
-  def set_file(this, file , mode):
-    this.file = file
-    this.mode = mode
+  def set_file(self, file , mode):
+    self.file = file
+    self.mode = mode
 
-  def set_json_data(this, json_data):
-      this.json_data = json_data
+  def set_json_data(self, json_data):
+      self.json_data = json_data
 
-  def append_json_data(this, json_data):
-    this.json_data.append(j_data)
+  def append_json_data(self, json_data):
+    self.json_data.append(json_data)
 
-  def read_json_from_file(this):
+  def read_json_from_file(self):
     import os
-    if os.path.isfile(this.file) is True:
+    if os.path.isfile(self.file) is True:
       try:
-        with open(this.file, this.mode) as json_file:
+        with open(self.file, self.mode) as json_file:
           return json.load(json_file)
       except ValueError:
         return None
     else:
-      open(this.file , "w").close()
+      open(self.file , "w").close()
       return None
 
-  def write_json_to_file(this):
-    pprint(this.json_data)
-    open(this.file , "w").close() #clear the file to fix extra bracket bug
-    with open(this.file, this.mode) as json_file:
-        return json.dump(this.json_data , json_file,indent = 4 , sort_keys=True)
+  def write_json_to_file(self):
+    pprint(self.json_data)
+    open(self.file , "w").close() #clear the file to fix extra bracket bug
+    with open(self.file, self.mode) as json_file:
+        return json.dump(self.json_data , json_file,indent = 4 , sort_keys=True)
 
-  def update_json(this,json_data,default):
-      this.json_data.update(json_data)
+  def update_json(self,json_data,default):
+      self.json_data.update(json_data)
 
-  def create_and_update_json_when_default_is_false(this,name,password,email,domain,server,default , new = False):
+  def create_and_update_json_when_default_is_false(self,name,password,email,domain,server,default , new = False):
     j_data = {
       name:{
       "password": password,
@@ -49,21 +49,21 @@ class JSON(object):
       }
     }
     if new is not True:
-      this.update_json(j_data,default)
+      self.update_json(j_data,default)
     else:
-      this.set_json_data(j_data)
+      self.set_json_data(j_data)
 
-  def create_and_update_json_when_default_is_true(this,name,password,email,domain,server,default , new = False):
+  def create_and_update_json_when_default_is_true(self,name,password,email,domain,server,default , new = False):
     if new is not True:
-      defaultKey = this.json_data.get("default", False)
+      defaultKey = self.json_data.get("default", False)
       if defaultKey is False:
-        this.default_doesnot_exists(name,password,email,domain,server,default)
+        self.default_doesnot_exists(name,password,email,domain,server,default)
       else:
-        this.default_exists(name,password,email,domain,server)
+        self.default_exists(name,password,email,domain,server)
     else:
-        this.default_doesnot_exists(name,password,email,domain,server,default, new = True)
+        self.default_doesnot_exists(name,password,email,domain,server,default, new = True)
 
-  def default_doesnot_exists(this,name,password,email,domain,server,default, new = False):
+  def default_doesnot_exists(self,name,password,email,domain,server,default, new = False):
     j_data = {
       name:{
       "password": password,
@@ -76,11 +76,11 @@ class JSON(object):
       }
     }
     if new is not True:
-      this.update_json(j_data,default)
+      self.update_json(j_data,default)
     else:
-      this.set_json_data(j_data)
+      self.set_json_data(j_data)
 
-  def default_exists(this,name,password,email,domain,server):
+  def default_exists(self,name,password,email,domain,server):
     j_data = {
       name:{
       "password": password,
@@ -89,21 +89,21 @@ class JSON(object):
       "server": server
       }
     }
-    this.update_json(j_data,False)
+    self.update_json(j_data,False)
 
-    this.json_data['default']['account_name'] = name
+    self.json_data['default']['account_name'] = name
 
-  def convert_to_json(this,name,password,email,domain,server,default):
-    if this.json_data is not None:
+  def convert_to_json(self,name,password,email,domain,server,default):
+    if self.json_data is not None:
       if default is False:
-        this.create_and_update_json_when_default_is_false(name,password,email,domain,server,default)
+        self.create_and_update_json_when_default_is_false(name,password,email,domain,server,default)
       else:
-        this.create_and_update_json_when_default_is_true(name,password,email,domain,server,default)
+        self.create_and_update_json_when_default_is_true(name,password,email,domain,server,default)
     else:
       if default is False:
-        this.create_and_update_json_when_default_is_false(name,password,email,domain,server,default, new = True)
+        self.create_and_update_json_when_default_is_false(name,password,email,domain,server,default, new = True)
       else:
-        this.create_and_update_json_when_default_is_true(name,password,email,domain,server,default, new = True)
+        self.create_and_update_json_when_default_is_true(name,password,email,domain,server,default, new = True)
 def main():
 
   from pprint import pprint

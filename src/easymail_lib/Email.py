@@ -188,7 +188,7 @@ def main():
   mail.set_email_server("smtp.gmail.com:587")
   mail.set_username_and_password("padalia.rushabh@gmail.com" , "Creatives@321.com")
   mail.set_email_subject("Hi better looking Python Generated Subject")
-  mail.set_email_body("This email is entirely python generated")
+  mail.set_email_body("self email is entirely python generated")
   attachment=[["/home/rushabh/Rushabh/EasyMail/Test/d/assignment.pdf"] , ["/home/rushabh/Rushabh/EasyMail/Test/d/gmailScript.py"]]
   mail.set_attachment_path(attachment)
   mail.send_email()

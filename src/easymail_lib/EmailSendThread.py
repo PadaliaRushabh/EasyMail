@@ -1,12 +1,18 @@
 from threading import Thread
 from threading import Lock
+from easymail_lib import Notification
 
 class EmailSendThread(Thread):
 
-  def __init__(this, email):
-    Thread.__init__(this)
-    this.email = email
+    def __init__(self, email):
+        Thread.__init__(self)
+        self.email = email
 
 
-  def run(this):
-    this.email.send_email()
+    def run(self):
+        self.email.send_email()
+        notification = Notification.Notification()
+        notification.send("EasyMail", "Your Message is Send")
+    
+    
+    
